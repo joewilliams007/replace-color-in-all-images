@@ -34,13 +34,13 @@ files.forEach(function (file) {
                 }
               }, (err, jimpObject) => {
                 if (err) return console.log(err)
-                jimpObject.write("./"+dir+"/replaced-color-with"+replaceColorInput+"/"+file, (err) => {
+                jimpObject.write("./"+dir+"/"+file, (err) => {
                   if (err) return console.log(err)
                 })
               })
         });
 });
-console.log("FINISHED! New files are located here: "+"./"+dir+"/replaced-color-with"+replaceColorInput);
+console.log("FINISHED! New files are located here: "+"./"+dir);
 
 // /home/joe/Desktop/icons
 
