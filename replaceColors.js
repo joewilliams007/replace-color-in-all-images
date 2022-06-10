@@ -37,15 +37,15 @@ files.forEach(function (file) {
               }
               getColors(dir+"/"+file, options).then(colors => {
                 // `colors` is an array of 10 color objects
-               colors.forEach(function(entry) {
+                colors.map(color => color.hex()).forEach(function(entry) {
                   console.log(entry);
 
-
+                 
                   replaceColor({
                     image: dir+"/"+file,
                     colors: {
                       type: 'hex',
-                      targetColor: "#000000",
+                      targetColor: entry,
                       replaceColor: replaceColorInput
                     }
                   }, (err, jimpObject) => {
