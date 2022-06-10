@@ -11,7 +11,7 @@ readline.question('What directory to search in?\nExample: ./home/images\n\n', di
     readline.close();
 
     fs.readdir(dir, (err, files) => {
-        console.log("Found "+files.length+" files.");
+        console.log("Found "+files.length+" files:\n ");
     });
 
     fs.readdir(dir, function (err, files) {
