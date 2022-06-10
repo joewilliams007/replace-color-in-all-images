@@ -1,7 +1,6 @@
 const fs = require('fs');
 const replaceColor = require('replace-color')
 const prompt = require('prompt-sync')();
-const sharp = require('sharp');
 
 console.log("started process")
 const dir = prompt('What is the directory name?\nExample /home/joe/Desktop/icons\n');
@@ -27,7 +26,6 @@ files.forEach(function (file) {
       console.log(file); 
 
     
-      sharp(dir+"/"+file)
           .greyscale() // make it greyscale
           .linear(1.5, 0) // increase the contrast
           .png({colors:2}) // reduce image to two colors
@@ -35,21 +33,39 @@ files.forEach(function (file) {
           .then(() => {
               console.log('Huzzah!')
       
-            replaceColor({
-                image: dir+"/"+file,
-                colors: {
-                  type: 'hex',
-                  targetColor: "#000000",
-                  replaceColor: replaceColorInput
-                }
-              }, (err, jimpObject) => {
-                if (err) return console.log(err)
-                jimpObject.write(dir+"/"+file, (err) => {
-                  if (err) return console.log(err)
-                  console.log("FINISHED! New files are located here: "+"./"+dir);
-                })
-              })
 
+
+              const getColors = require('get-image-colors')
+              
+              const options = {
+                count: 10,
+                type: 'image/png'
+              }
+              getColors(dir+"/"+file, options).then(colors => {
+                // `colors` is an array of 10 color objects
+               colors.forEach(function(entry) {
+                  console.log(entry);
+
+                  
+                  replaceColor({
+                    image: dir+"/"+file,
+                    colors: {
+                      type: 'hex',
+                      targetColor: "#000000",
+                      replaceColor: replaceColorInput
+                    }
+                  }, (err, jimpObject) => {
+                    if (err) return console.log(err)
+                    jimpObject.write(dir+"/"+file, (err) => {
+                      if (err) return console.log(err)
+                      console.log("FINISHED! New files are located here: "+"./"+dir);
+                    })
+                  })
+
+
+
+                });
+              })
             }); 
         });
 });
