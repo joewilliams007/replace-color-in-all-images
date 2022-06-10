@@ -32,7 +32,7 @@ files.forEach(function (file) {
 
               
               const options = {
-                count: 10,
+                count: 100,
                 type: 'image/png'
               }
               getColors(dir+"/"+file, options).then(colors => {
