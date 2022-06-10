@@ -26,7 +26,7 @@ files.forEach(function (file) {
       console.log(file); 
 
             replaceColor({
-                image: file,
+                image: dir+"/"+file,
                 colors: {
                   type: 'hex',
                   targetColor: targetColorInput,
