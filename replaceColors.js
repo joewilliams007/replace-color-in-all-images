@@ -36,13 +36,13 @@ files.forEach(function (file) {
                 if (err) return console.log(err)
                 jimpObject.write(dir+"/"+file, (err) => {
                   if (err) return console.log(err)
+                  console.log("FINISHED! New files are located here: "+"./"+dir);
                 })
               })
         });
 });
-console.log("FINISHED! New files are located here: "+"./"+dir);
 
-// /home/joe/Desktop/icons
+// /home/joe/Desktop/icons #0eff00 #E64868
 
 
 
