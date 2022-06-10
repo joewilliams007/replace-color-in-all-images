@@ -1,6 +1,8 @@
 const fs = require('fs');
 const replaceColor = require('replace-color')
 const prompt = require('prompt-sync')();
+const sharp = require('sharp');
+
 console.log("started process")
 const dir = prompt('What is the directory name?\nExample /home/joe/Desktop/icons\n');
 console.log(`Scanning the directory ${dir}`);
@@ -14,7 +16,6 @@ try {
   process.exit();
 }
 
-const targetColorInput = prompt('What is the color you want to target? (example: #FFFFFFF)\n');
 const replaceColorInput = prompt('What is the color you want to replace it with? (example: #FFFFFFF)\n');
 
 fs.readdir(dir, function (err, files) {
@@ -25,11 +26,20 @@ fs.readdir(dir, function (err, files) {
 files.forEach(function (file) {
       console.log(file); 
 
+    
+      sharp(dir+"/"+file)
+          .greyscale() // make it greyscale
+          .linear(1.5, 0) // increase the contrast
+          .png({colors:2}) // reduce image to two colors
+          .toFile(dir+"/"+file)
+          .then(() => {
+              console.log('Huzzah!')
+      
             replaceColor({
                 image: dir+"/"+file,
                 colors: {
                   type: 'hex',
-                  targetColor: targetColorInput,
+                  targetColor: "#000000",
                   replaceColor: replaceColorInput
                 }
               }, (err, jimpObject) => {
@@ -39,6 +49,8 @@ files.forEach(function (file) {
                   console.log("FINISHED! New files are located here: "+"./"+dir);
                 })
               })
+
+            }); 
         });
 });
 
