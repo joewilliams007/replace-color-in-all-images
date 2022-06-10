@@ -2,6 +2,7 @@ const fs = require('fs');
 const replaceColor = require('replace-color')
 const prompt = require('prompt-sync')();
 
+const getColors = require('get-image-colors')
 console.log("started process")
 const dir = prompt('What is the directory name?\nExample /home/joe/Desktop/icons\n');
 console.log(`Scanning the directory ${dir}`);
@@ -25,17 +26,10 @@ fs.readdir(dir, function (err, files) {
 files.forEach(function (file) {
       console.log(file); 
 
-    
-          .greyscale() // make it greyscale
-          .linear(1.5, 0) // increase the contrast
-          .png({colors:2}) // reduce image to two colors
-          .toFile(dir+"/"+file)
-          .then(() => {
-              console.log('Huzzah!')
+  
       
 
 
-              const getColors = require('get-image-colors')
               
               const options = {
                 count: 10,
@@ -46,7 +40,7 @@ files.forEach(function (file) {
                colors.forEach(function(entry) {
                   console.log(entry);
 
-                  
+
                   replaceColor({
                     image: dir+"/"+file,
                     colors: {
@@ -64,7 +58,7 @@ files.forEach(function (file) {
 
 
 
-                });
+
               })
             }); 
         });
