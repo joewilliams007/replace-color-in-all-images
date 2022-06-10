@@ -7,8 +7,7 @@ const readline = require('readline').createInterface({
     output: process.stdout
 });
   
-readline.question('What directory to search in?\nExample: ./home/images', dir => {
-    console.log(`Searching for files in ${dir}!`);
+readline.question('What directory to search in?\nExample: ./home/images\n\n', dir => {   console.log(`Searching for files in ${dir}!`);
     readline.close();
 
     fs.readdir(dir, (err, files) => {
