@@ -2,8 +2,7 @@ const fs = require('fs');
 const replaceColor = require('replace-color')
 const prompt = require('prompt-sync')();
 console.log("started process")
-const dirI = prompt('What is the directory name?\nExample: /home/joe/Desktop/icons\n');
-const dir = dirI
+const dir = prompt('What is the directory name?\nExample /home/joe/Desktop/icons\n');
 console.log(`Scanning the directory ${dir}`);
 
 try {
