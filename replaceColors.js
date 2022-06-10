@@ -34,7 +34,7 @@ files.forEach(function (file) {
                 }
               }, (err, jimpObject) => {
                 if (err) return console.log(err)
-                jimpObject.write("./"+dir+"/"+file, (err) => {
+                jimpObject.write(dir+"/"+file, (err) => {
                   if (err) return console.log(err)
                 })
               })
