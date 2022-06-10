@@ -1,45 +1,48 @@
 const fs = require('fs');
-
-console.log("started process")
-
-const readline = require('readline').createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-  
-readline.question('What directory to search in?\nExample: ./home/images\n\n', dir => {   console.log(`Searching for files in ${dir}!`);
-    readline.close();
-
-    fs.readdir(dir, (err, files) => {
-        console.log("Found "+files.length+" files:\n ");
-    });
-
-    fs.readdir(dir, function (err, files) {
-        if (err) {
-            return console.log('Unable to scan directory: ' + err);
-        } 
-     
-        files.forEach(function (file) {
-            console.log(file); 
-        
-        });
-    });
-
-});
-
-
-/*
 const replaceColor = require('replace-color')
-replaceColor({
-    image: file,
-    colors: {
-      type: 'hex',
-      targetColor: '#FF0000',
-      replaceColor: '#FFFFFF'
-    }
-  }, (err, jimpObject) => {
-    if (err) return console.log(err)
-    jimpObject.write('./output.jpg', (err) => {
-      if (err) return console.log(err)
-    })
-  })*/
+const prompt = require('prompt-sync')();
+console.log("started process")
+const dir = prompt('What is the directory name?\nExample; /home/joe/Desktop/icons\n');
+console.log(`Scanning the directory ${dir}`);
+
+try {
+  fs.readdir(dir, (err, files) => {
+      console.log("Found "+files.length+" files:\n ");
+  });
+} catch (err){
+  console.log("Unable to find any files!\n ");
+  process.exit();
+}
+
+const targetColorInput = prompt('What is the color you want to target? (example: #FFFFFFF)\n');
+const replaceColorInput = prompt('What is the color you want to replace it with? (example: #FFFFFFF)\n');
+
+fs.readdir(dir, function (err, files) {
+    if (err) {
+        return console.log('Unable to scan directory: ' + err);
+    } 
+     
+files.forEach(function (file) {
+      console.log(file); 
+
+            replaceColor({
+                image: file,
+                colors: {
+                  type: 'hex',
+                  targetColor: targetColorInput,
+                  replaceColor: replaceColorInput
+                }
+              }, (err, jimpObject) => {
+                if (err) return console.log(err)
+                jimpObject.write("./"+dir+"/replaced-color-with"+replaceColorInput+"/"+file, (err) => {
+                  if (err) return console.log(err)
+                })
+              })
+        });
+});
+console.log("FINISHED! New files are located here: "+"./"+dir+"/replaced-color-with"+replaceColorInput);
+
+// /home/joe/Desktop/icons
+
+
+
